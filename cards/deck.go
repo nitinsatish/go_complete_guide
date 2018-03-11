@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"os"
 	"strings"
 )
 
@@ -46,4 +47,14 @@ func (d deck) shuffle() deck {
 		d[i], d[randno] = d[randno], d[i]
 	}
 	return d
+}
+
+func deckFromFile(f string) deck {
+	bs, err := ioutil.ReadFile(f)
+	if err != nil {
+		fmt.Println("Error", err)
+		os.Exit(1)
+	}
+	s := strings.Split(string(bs), ", ")
+	return deck(s)
 }
